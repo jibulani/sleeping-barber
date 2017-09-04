@@ -15,22 +15,22 @@ public class Customer extends Thread {
 
     @Override
     public void run() {
+        System.out.println("New customer run");
         if (barber.getCustomerChairs() > 0) {
             freeChairs = barber.getCustomerChairs();
             barber.decreaseCustomerChairs();
         } else {
             freeChairs = 0;
         }
-        System.out.println("New customer run");
-        System.out.println("Barber isSleeping = " + barber.getIsSleeping());
-        System.out.println("Free chairs = " + barber.getCustomerChairs());
+//        System.out.println("Barber isSleeping = " + barber.getIsSleeping());
+//        System.out.println("Free chairs = " + barber.getCustomerChairs());
         if (freeChairs > 0) {
             do {
                 if (!Thread.interrupted()) {
                     if (barber.getIsSleeping()) {
                         System.out.println("Customer wake up barber");
                         barber.setSleeping(false);
-                        System.out.println("Barber isSleeping = " + barber.getIsSleeping());
+//                        System.out.println("Barber isSleeping = " + barber.getIsSleeping());
                     }
                 } else {
                     System.out.println("Customer go out");
