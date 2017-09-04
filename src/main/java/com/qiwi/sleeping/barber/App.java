@@ -21,6 +21,11 @@ public class App {
         customer.start();
         customer.interrupt();
         customers.forEach(Thread::interrupt);
+        try {
+            customer.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         customers.forEach(customer1 -> {
             try {
                 customer1.join();

@@ -5,20 +5,25 @@ package com.qiwi.sleeping.barber;
  */
 public class Customer extends Thread {
 
-    private static volatile int freeChairs;
-    private static volatile Barber barber;
+    private int freeChairs;
+    private Barber barber;
 
     public Customer(Barber barber) {
         super();
-        Customer.barber = barber;
+        this.barber = barber;
     }
 
     @Override
     public void run() {
-        freeChairs = barber.customerChairs > 0 ? barber.customerChairs-- : 0;
+        if (barber.getCustomerChairs() > 0) {
+            freeChairs = barber.getCustomerChairs();
+            barber.decreaseCustomerChairs();
+        } else {
+            freeChairs = 0;
+        }
         System.out.println("New customer run");
         System.out.println("Barber isSleeping = " + barber.getIsSleeping());
-        System.out.println("Free chairs = " + barber.customerChairs);
+        System.out.println("Free chairs = " + barber.getCustomerChairs());
         if (freeChairs > 0) {
             do {
                 if (!Thread.interrupted()) {
@@ -29,9 +34,9 @@ public class Customer extends Thread {
                     }
                 } else {
                     System.out.println("Customer go out");
-                    barber.customerChairs++;
-                    System.out.println("Barber isSleeping = " + barber.getIsSleeping());
-                    System.out.println("Free chairs = " + barber.customerChairs);
+                    barber.increaseCustomerChairs();
+//                    System.out.println("Free chairs = " + barber.getCustomerChairs());
+//                    System.out.println("Barber isSleeping = " + barber.getIsSleeping());
                     return;
                 }
             } while (true);

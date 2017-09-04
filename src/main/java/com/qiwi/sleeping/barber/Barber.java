@@ -6,14 +6,26 @@ package com.qiwi.sleeping.barber;
 public class Barber extends Thread {
 
     private volatile boolean isSleeping = true;
-    public int customerChairs = 10;
+    private int customerChairs = 10;
 
-    public void setSleeping(boolean isSleeping) {
+    public synchronized void setSleeping(boolean isSleeping) {
         this.isSleeping = isSleeping;
     }
 
-    public boolean getIsSleeping() {
+    public synchronized boolean getIsSleeping() {
         return isSleeping;
+    }
+
+    public synchronized void increaseCustomerChairs() {
+        customerChairs++;
+    }
+
+    public synchronized void decreaseCustomerChairs() {
+        customerChairs--;
+    }
+
+    public synchronized int getCustomerChairs() {
+        return customerChairs;
     }
 
     @Override
