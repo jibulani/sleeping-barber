@@ -7,10 +7,12 @@ public class Customer extends Thread {
 
     private int freeChairs;
     private Barber barber;
+    private BarberShop barberShop;
 
-    public Customer(Barber barber) {
+    public Customer(Barber barber, BarberShop barberShop) {
         super();
         this.barber = barber;
+        this.barberShop = barberShop;
     }
 
     @Override
@@ -22,24 +24,18 @@ public class Customer extends Thread {
         } else {
             freeChairs = 0;
         }
-//        System.out.println("Barber isSleeping = " + barber.getIsSleeping());
-//        System.out.println("Free chairs = " + barber.getCustomerChairs());
+        System.out.println("Barber isSleeping = " + barber.getIsSleeping());
+        System.out.println("Free chairs = " + barber.getCustomerChairs());
         if (freeChairs > 0) {
-            do {
-                if (!Thread.interrupted()) {
-                    if (barber.getIsSleeping()) {
-                        System.out.println("Customer wake up barber");
-                        barber.setSleeping(false);
-//                        System.out.println("Barber isSleeping = " + barber.getIsSleeping());
-                    }
-                } else {
-                    System.out.println("Customer go out");
-                    barber.increaseCustomerChairs();
-//                    System.out.println("Free chairs = " + barber.getCustomerChairs());
-//                    System.out.println("Barber isSleeping = " + barber.getIsSleeping());
-                    return;
-                }
-            } while (true);
+            barberShop.addCustomer(this);
+            if (barber.getIsSleeping()) {
+                System.out.println("Customer wake up barber");
+                barber.setSleeping(false);
+            }
+            System.out.println("Customer wait");
+            System.out.println("Customer go out");
+            barber.increaseCustomerChairs();
+            barberShop.currCustomers.remove(this);
         } else {
             System.out.println("No chairs are available");
         }

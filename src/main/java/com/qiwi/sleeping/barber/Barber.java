@@ -34,11 +34,7 @@ public class Barber extends Thread {
             if (!Thread.interrupted()) {
                 if (customerChairs == 10) {
                     setSleeping(true);
-                } else {
-                    setSleeping(false);
                 }
-                System.out.println("Barber isSleeping = " + getIsSleeping());
-                System.out.println("Free chairs = " + getCustomerChairs());
             } else  {
                 return;
             }
