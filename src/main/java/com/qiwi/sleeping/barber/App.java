@@ -8,13 +8,11 @@ import java.util.List;
  */
 public class App {
 
-    static Barber barber;
-
     public static void main(String[] args) {
-        barber = new Barber();
         BarberShop barberShop = new BarberShop();
+        Barber barber = new Barber(barberShop);
         barber.start();
-        List<Customer> customers = CustomerListGenerator.generateCustomerList(barber, barberShop);
-        customers.forEach(Thread::start);
+        CustomerListGenerator customerListGenerator = new CustomerListGenerator(barber, barberShop);
+        customerListGenerator.start();
     }
 }
