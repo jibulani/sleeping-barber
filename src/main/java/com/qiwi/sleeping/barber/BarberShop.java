@@ -22,13 +22,6 @@ public class BarberShop {
         }
     }
 
-    public boolean isEmpty() {
-        if (currCustomers == null) {
-            currCustomers = new ArrayList<>();
-        }
-        return currCustomers.size() == 0;
-    }
-
     public synchronized void shave() {
         if (currCustomers == null) {
             currCustomers = new ArrayList<>();
